@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <title>Aspekt5</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+ <!-- iOS PWA -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Aspekt5">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="logo">ASPEKT5</div>
+    <button class="add-place-btn" id="addPlaceBtn" hidden>Добавить заведение</button>
+  </header>
+
+  <main class="main">
+    <section class="address-section">
+      <label for="addressInput" class="address-label">Введите адрес (улица, дом)</label>
+      <div class="address-row">
+        <input id="addressInput" type="text" class="address-input" placeholder="Например, Москва, Тверская 10" />
+        <button id="searchAddressBtn" class="primary-btn">Найти</button>
+      </div>
+      <div id="addressError" class="error-text"></div>
+    </section>
+
+    <section class="categories-section" id="categoriesSection" hidden>
+      <h2 class="section-title">Выберите категорию</h2>
+
+      <div class="categories-grid">
+        <!-- 1 ряд -->
+        <button class="category-btn">Салоны красоты/косметология</button>
+        <button class="category-btn">Массажные кабинеты/спа-салоны</button>
+        <button class="category-btn">Ателье</button>
+        <button class="category-btn">Химчистка</button>
+
+        <!-- 2 ряд -->
+        <button class="category-btn">Спортивные секции/спортзалы/спортклубы</button>
+        <button class="category-btn">Барбершопы/парикмахерские</button>
+        <button class="category-btn">Развлечения для детей</button>
+        <button class="category-btn">Автомойка</button>
+
+        <!-- 3 ряд -->
+        <button class="category-btn">Аптеки</button>
+        <button class="category-btn">Медцентры</button>
+        <button class="category-btn">Стоматологические услуги</button>
+        <button class="category-btn">Церковь</button>
+
+        <!-- 4 ряд -->
+        <button class="category-btn">Рестораны/кафе</button>
+        <button class="category-btn">Кофейня</button>
+        <button class="category-btn">Кондитерские/пекарни</button>
+        <button class="category-btn">Уличная еда</button>
+
+        <!-- 5 ряд -->
+        <button class="category-btn">Прокат автомобилей</button>
+        <button class="category-btn">Детские сады/школы</button>
+        <button class="category-btn">Изготовление ключей</button>
+        <button class="category-btn">Магазины</button>
+
+        <!-- 6 ряд -->
+        <button class="category-btn">Гостиницы</button>
+        <button class="category-btn">Цветочные магазины/флористы</button>
+        <button class="category-btn">Табак</button>
+      </div>
+    </section>
+
+    <section class="results-section" id="resultsSection" hidden>
+    <div class="radius-selector" id="radiusSelector" hidden>
+      <span class="radius-label">Радиус поиска:</span>
+      <button class="radius-btn active" data-radius="500">500 м</button>
+      <button class="radius-btn" data-radius="1000">1000 м</button>
+      <button class="radius-btn" data-radius="1500">1500 м</button>
+    </div>
+      <div id="resultsHeader" class="results-header"></div>
+      <div id="resultsList" class="results-list"></div>
+      <div id="placeDetails" class="place-details"></div>
+    </section>
+  </main>
+
+    <!-- Яндекс.Карты: JS API + Suggest API -->
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&load=SuggestView&apikey=44617fe1-6370-4ed9-8c72-f7c495544b43&suggest_apikey=02693dcf-d27a-4880-a426-f087dca20bc0"></script>
+<script src="app.js?v=3"></script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').catch(console.error);
+    });
+  }
+</script>
+</body>
+</html>
+
+
+
+
+
+
