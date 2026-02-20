@@ -6,35 +6,26 @@ workflows:
     environment:
       java: 21
       node: 20
+      groups:
+        - android_signing
     scripts:
       - name: Install dependencies
         script: npm ci
       - name: Build web assets
         script: npx cap sync android
-      - name: Build Android APK
+      - name: Setup keystore
+        script: |
+          echo $CM_KEYSTORE | base64 --decode > android/app/aspekt5-release-key.jks
+          cat > android/app/signing.properties << PROPS
+          storeFile=aspekt5-release-key.jks
+          storePassword=$CM_KEYSTORE_PASSWORD
+          keyAlias=$CM_KEY_ALIAS
+          keyPassword=$CM_KEYSTORE_PASSWORD
+          PROPS
+      - name: Build Android AAB
         script: |
           cd android
           chmod +x gradlew
           ./gradlew bundleRelease
     artifacts:
       - android/app/build/outputs/**/*.aab
-
-  ios-build:
-    name: iOS Build
-    max_build_duration: 30
-    instance_type: mac_mini_m2
-    environment:
-      xcode: latest
-      node: 20
-      cocoapods: default
-    scripts:
-      - name: Install dependencies
-        script: npm ci
-      - name: Build web assets
-        script: npx cap sync ios
-      - name: Build iOS
-        script: |
-          cd ios/App
-          xcodebuild build -workspace App.xcworkspace -scheme App -destination 'generic/platform=iOS Simulator' -configuration Debug
-    artifacts:
-      - ios/App/build/**/*.app
